@@ -1,0 +1,9 @@
+C:\Sandbox\FileReadToSQLDB\bin\Debug\FileReadToSQLDB.exe.config
+C:\Sandbox\FileReadToSQLDB\bin\Debug\FileReadToSQLDB.exe
+C:\Sandbox\FileReadToSQLDB\bin\Debug\FileReadToSQLDB.pdb
+C:\Sandbox\FileReadToSQLDB\obj\Debug\FileReadToSQLDB.csprojAssemblyReference.cache
+C:\Sandbox\FileReadToSQLDB\obj\Debug\FileReadToSQLDB.FrmMain.resources
+C:\Sandbox\FileReadToSQLDB\obj\Debug\FileReadToSQLDB.Properties.Resources.resources
+C:\Sandbox\FileReadToSQLDB\obj\Debug\FileReadToSQLDB.csproj.GenerateResource.cache
+C:\Sandbox\FileReadToSQLDB\obj\Debug\FileReadToSQLDB.exe
+C:\Sandbox\FileReadToSQLDB\obj\Debug\FileReadToSQLDB.pdb
