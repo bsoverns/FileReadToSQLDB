@@ -50,6 +50,7 @@
             this.cmbDelimiter = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.lblTestLabel = new System.Windows.Forms.Label();
             this.grpImport.SuspendLayout();
             this.grpDatabaseLogin.SuspendLayout();
             this.grpBoxExportType.SuspendLayout();
@@ -94,6 +95,7 @@
             this.btnProcess.TabIndex = 3;
             this.btnProcess.Text = "Process File";
             this.btnProcess.UseVisualStyleBackColor = true;
+            this.btnProcess.Click += new System.EventHandler(this.btnProcess_Click);
             // 
             // label1
             // 
@@ -266,11 +268,21 @@
             this.label7.TabIndex = 3;
             this.label7.Text = "Delimted Character";
             // 
+            // lblTestLabel
+            // 
+            this.lblTestLabel.AutoSize = true;
+            this.lblTestLabel.Location = new System.Drawing.Point(484, 132);
+            this.lblTestLabel.Name = "lblTestLabel";
+            this.lblTestLabel.Size = new System.Drawing.Size(35, 13);
+            this.lblTestLabel.TabIndex = 28;
+            this.lblTestLabel.Text = "label8";
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(902, 312);
+            this.Controls.Add(this.lblTestLabel);
             this.Controls.Add(this.grpBoxExportType);
             this.Controls.Add(this.grpDatabaseLogin);
             this.Controls.Add(this.grpImport);
@@ -285,6 +297,7 @@
             this.grpBoxExportType.ResumeLayout(false);
             this.grpBoxExportType.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -311,6 +324,7 @@
         private System.Windows.Forms.ComboBox cmbDelimiter;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label lblTestLabel;
     }
 }
 

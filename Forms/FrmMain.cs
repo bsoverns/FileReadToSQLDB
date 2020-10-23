@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.IO;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Net;
 using System.Text;
 using System.Windows.Forms;
+using Microsoft.VisualBasic.FileIO;
 
 namespace FileReadToSQLDB
 {
@@ -28,7 +30,7 @@ namespace FileReadToSQLDB
             cmbQuoted.SelectedItem = "Yes";
 
 #if DEBUG
-            txtInstance.Text = @"COMPUTER34";
+            txtInstance.Text = @"COMPUTER46";
             txtDatabase.Text = @"Voter_Database";
             txtLogin.Text = @"sa";
             txtPassword.Text = @"";
@@ -37,23 +39,15 @@ namespace FileReadToSQLDB
 
         private void btnBrowse_Click(object sender, EventArgs e)
         {
-            //Folders
-            //FolderBrowserDialog folder = new FolderBrowserDialog();
-            //folder.RootFolder = Environment.SpecialFolder.MyComputer;
-            //if (folder.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            //{
-            //    txtFile.Text = folder.SelectedPath.ToString();
-            //}
-
             //Files
             var fileContent = string.Empty;
             var filePath = string.Empty;
 
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                openFileDialog.InitialDirectory = "c:\\";
-                openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
-                openFileDialog.FilterIndex = 2;
+                openFileDialog.InitialDirectory = @"c:\";
+                openFileDialog.Filter = "csv files (*.csv)|*.csv|txt files (*.txt)|*.txt|All files (*.*)|*.*";
+                openFileDialog.FilterIndex = 1;
                 openFileDialog.RestoreDirectory = true;
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -123,6 +117,58 @@ namespace FileReadToSQLDB
                     btnConnect.Text = "Connect";
                 }
             }
+        }
+
+        private void btnProcess_Click(object sender, EventArgs e)
+        {
+            processFile(txtFile.Text.ToString());
+        }
+
+        private void processFile(string fileToProcess)
+        {
+            System.IO.FileInfo fileData = new System.IO.FileInfo(fileToProcess);
+            //MessageBox.Show(fileData.Name);
+
+            try
+            {
+                if (File.Exists(fileData.FullName))
+                {
+                    using (TextFieldParser parser = new TextFieldParser(fileData.FullName))
+                    {
+                        int row = 1;
+                        int column = 1;
+
+                        parser.TextFieldType = FieldType.Delimited;
+                        parser.HasFieldsEnclosedInQuotes = true;
+                        parser.SetDelimiters(",");
+
+                        while(!parser.EndOfData)
+                        {
+                            string[] fields = parser.ReadFields();
+                            foreach(string field in fields)
+                            {
+                                lblTestLabel.Text = (row.ToString() + " - " + field.ToString());
+                                //MessageBox.Show("ColumnTest " + field.ToString());
+                                column++;
+                            }
+                            column = 1;
+                            row++;                            
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+            finally
+            {
+                MessageBox.Show("Done");
+            }
+
+            
         }
     }
 }

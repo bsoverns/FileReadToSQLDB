@@ -7,3 +7,4 @@ C:\Sandbox\FileReadToSQLDB\obj\Debug\FileReadToSQLDB.Properties.Resources.resour
 C:\Sandbox\FileReadToSQLDB\obj\Debug\FileReadToSQLDB.csproj.GenerateResource.cache
 C:\Sandbox\FileReadToSQLDB\obj\Debug\FileReadToSQLDB.exe
 C:\Sandbox\FileReadToSQLDB\obj\Debug\FileReadToSQLDB.pdb
+C:\Sandbox\FileReadToSQLDB\obj\Debug\FileReadToSQLDB.csproj.CoreCompileInputs.cache
