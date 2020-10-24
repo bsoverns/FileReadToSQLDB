@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 using Microsoft.VisualBasic.FileIO;
 
@@ -16,6 +17,8 @@ namespace FileReadToSQLDB
     {
         string DataSource; //used to save the datasource from the dsnNames
         string InitialCatalog; //used to save the InitialCatalog        
+        string ReportRow;
+        string ReportField;
         SQLConnectionClass SQLConnect = new SQLConnectionClass("", "", "", "", false);
 
         public FrmMain()
@@ -121,11 +124,19 @@ namespace FileReadToSQLDB
 
         private void btnProcess_Click(object sender, EventArgs e)
         {
-            processFile(txtFile.Text.ToString());
+            cmbDelimiter.Enabled = false;
+            cmbQuoted.Enabled = false;
+            btnProcess.Enabled = false;
+            Thread process_file = new Thread(processFile);
+            process_file.IsBackground = true;
+            process_file.Start();
+            //processFile(txtFile.Text.ToString());
         }
 
-        private void processFile(string fileToProcess)
+        //private void processFile(string fileToProcess)
+        private void processFile()
         {
+            string fileToProcess = txtFile.Text.ToString();
             System.IO.FileInfo fileData = new System.IO.FileInfo(fileToProcess);
             //MessageBox.Show(fileData.Name);
 
@@ -147,7 +158,12 @@ namespace FileReadToSQLDB
                             string[] fields = parser.ReadFields();
                             foreach(string field in fields)
                             {
-                                lblTestLabel.Text = (row.ToString() + " - " + field.ToString());
+                                if (column == 1)
+                                {
+                                    ReportRow = row.ToString();
+                                    ReportField = field.ToString();
+                                    Invoke(new UIUpdate(StartUpdate));
+                                }
                                 //MessageBox.Show("ColumnTest " + field.ToString());
                                 column++;
                             }
@@ -166,9 +182,17 @@ namespace FileReadToSQLDB
             finally
             {
                 MessageBox.Show("Done");
-            }
+                btnProcess.Enabled = false;
+            }            
+        }
 
-            
+        //UI delegate
+        public delegate void UIUpdate();
+
+        public void StartUpdate()
+        {
+            lblTestLabel.Text = (ReportRow.ToString() + " - " + ReportField.ToString());
+            this.lblTestLabel.Refresh();
         }
     }
 }
