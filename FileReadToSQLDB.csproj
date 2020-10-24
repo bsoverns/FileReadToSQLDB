@@ -50,7 +50,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\IPHelper.cs" />
+    <Compile Include="Classes\LogWriter.cs" />
     <Compile Include="Classes\SQLConnectionClass.cs" />
+    <Compile Include="Classes\SQLProcess.cs" />
+    <Compile Include="Classes\Voters.cs" />
     <Compile Include="Forms\FrmMain.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -10,11 +10,13 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using Microsoft.VisualBasic.FileIO;
+using FileReadToSQLDB.Classes;
 
 namespace FileReadToSQLDB
 {
     public partial class FrmMain : Form
     {
+        public List<Voters> _voters = new List<Voters>();
         string DataSource; //used to save the datasource from the dsnNames
         string InitialCatalog; //used to save the InitialCatalog        
         string ReportRow;
@@ -50,7 +52,7 @@ namespace FileReadToSQLDB
             {
                 openFileDialog.InitialDirectory = @"c:\";
                 openFileDialog.Filter = "csv files (*.csv)|*.csv|txt files (*.txt)|*.txt|All files (*.*)|*.*";
-                openFileDialog.FilterIndex = 1;
+                openFileDialog.FilterIndex = 3;
                 openFileDialog.RestoreDirectory = true;
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -138,6 +140,7 @@ namespace FileReadToSQLDB
         {
             string fileToProcess = txtFile.Text.ToString();
             System.IO.FileInfo fileData = new System.IO.FileInfo(fileToProcess);
+            LogWriter log = new LogWriter();
             //MessageBox.Show(fileData.Name);
 
             try
@@ -148,6 +151,53 @@ namespace FileReadToSQLDB
                     {
                         int row = 1;
                         int column = 1;
+                        string SOSVoterId = null;
+                        string CountyNumber = null;
+                        string CountyId = null;
+                        string LastName = null;
+                        string FirstName = null;
+                        string MiddleName = null;
+                        string Suffix = null;
+                        string DateOfBirth = null;
+                        string RegistrationDate = null;
+                        string VoterStatus = null;
+                        string PartyAffiliation = null;
+                        string ResidentialAddress1 = null;
+                        string ResidentialAddress2 = null;
+                        string ResidentialCity = null;
+                        string ResidentialState = null;
+                        string ResidentialZip = null;
+                        string ResidentialZipPlus4 = null;
+                        string ResidentialCountry = null;
+                        string ResidentialPostalCode = null;
+                        string MailingAddress1 = null;
+                        string MailingAddress2 = null;
+                        string MailingCity = null;
+                        string MailingState = null;
+                        string MailingZip = null;
+                        string MailingZipPlus4 = null;
+                        string MailingCountry = null;
+                        string MailingPostalCode = null;
+                        string CareerCenter = null;
+                        string City = null;
+                        string CitySchoolDistrict = null;
+                        string CountyCourtDistrict = null;
+                        string CongressionalDistrict = null;
+                        string CourtofAppeals = null;
+                        string EducationServiceCenter = null;
+                        string ExemptedVillageSchoolDistrict = null;
+                        string LibraryDistrict = null;
+                        string LocalSchoolDistrict = null;
+                        string MunicipalCourtDistrict = null;
+                        string Precinct = null;
+                        string PrecinctCode = null;
+                        string StateBoardofEducation = null;
+                        string StateRepresentativeDistrict = null;
+                        string StateSenateDistrict = null;
+                        string Township = null;
+                        string Village = null;
+                        string Ward = null;
+                        string empty = null;
 
                         parser.TextFieldType = FieldType.Delimited;
                         parser.HasFieldsEnclosedInQuotes = true;
@@ -164,9 +214,180 @@ namespace FileReadToSQLDB
                                     ReportField = field.ToString();
                                     Invoke(new UIUpdate(StartUpdate));
                                 }
+
+                                if (row != 1)
+                                {
+                                    switch (column)
+                                    {
+                                        case 1:
+                                            SOSVoterId = field;
+                                            break;
+                                        case 2:
+                                            CountyNumber = field;
+                                            break;
+                                        case 3:
+                                            CountyId = field;
+                                            break;
+                                        case 4:
+                                            LastName = field;
+                                            break;
+                                        case 5:
+                                            FirstName = field;
+                                            break;
+                                        case 6:
+                                            MiddleName = field;
+                                            break;
+                                        case 7:
+                                            Suffix = field;
+                                            break;
+                                        case 8:
+                                            DateOfBirth = field;
+                                            break;
+                                        case 9:
+                                            RegistrationDate = field;
+                                            break;
+                                        case 10:
+                                            VoterStatus = field;
+                                            break;
+                                        case 11:
+                                            PartyAffiliation = field;
+                                            break;
+                                        case 12:
+                                            ResidentialAddress1 = field;
+                                            break;
+                                        case 13:
+                                            ResidentialAddress2 = field;
+                                            break;
+                                        case 14:
+                                            ResidentialCity = field;
+                                            break;
+                                        case 15:
+                                            ResidentialState = field;
+                                            break;
+                                        case 16:
+                                            ResidentialZip = field;
+                                            break;
+                                        case 17:
+                                            ResidentialZipPlus4 = field;
+                                            break;
+                                        case 18:
+                                            ResidentialCountry = field;
+                                            break;
+                                        case 19:
+                                            ResidentialPostalCode = field;
+                                            break;
+                                        case 20:
+                                            MailingAddress1 = field;
+                                            break;
+                                        case 21:
+                                            MailingAddress2 = field;
+                                            break;
+                                        case 22:
+                                            MailingCity = field;
+                                            break;
+                                        case 23:
+                                            MailingState = field;
+                                            break;
+                                        case 24:
+                                            MailingZip = field;
+                                            break;
+                                        case 25:
+                                            MailingZipPlus4 = field;
+                                            break;
+                                        case 26:
+                                            MailingCountry = field;
+                                            break;
+                                        case 27:
+                                            MailingPostalCode = field;
+                                            break;
+                                        case 28:
+                                            CareerCenter = field;
+                                            break;
+                                        case 29:
+                                            City = field;
+                                            break;
+                                        case 30:
+                                            CitySchoolDistrict = field;
+                                            break;
+                                        case 31:
+                                            CountyCourtDistrict = field;
+                                            break;
+                                        case 32:
+                                            CongressionalDistrict = field;
+                                            break;
+                                        case 33:
+                                            CourtofAppeals = field;
+                                            break;
+                                        case 34:
+                                            EducationServiceCenter = field;
+                                            break;
+                                        case 35:
+                                            ExemptedVillageSchoolDistrict = field;
+                                            break;
+                                        case 36:
+                                            LibraryDistrict = field;
+                                            break;
+                                        case 37:
+                                            LocalSchoolDistrict = field;
+                                            break;
+                                        case 38:
+                                            MunicipalCourtDistrict = field;
+                                            break;
+                                        case 39:
+                                            Precinct = field;
+                                            break;
+                                        case 40:
+                                            PrecinctCode = field;
+                                            break;
+                                        case 41:
+                                            StateBoardofEducation = field;
+                                            break;
+                                        case 42:
+                                            StateRepresentativeDistrict = field;
+                                            break;
+                                        case 43:
+                                            StateSenateDistrict = field;
+                                            break;
+                                        case 44:
+                                            Township = field;
+                                            break;
+                                        case 45:
+                                            Village = field;
+                                            break;
+                                        case 46:
+                                            Ward = field;
+                                            break;                                        
+                                        default:
+                                            empty = field;
+                                            break;
+                                    }                                   
+                                     
+                                }
+
                                 //MessageBox.Show("ColumnTest " + field.ToString());
                                 column++;
                             }
+
+                            if (row != 1)
+                            {
+                                //_voters.Add(new Voters(SOSVoterId, CountyNumber, CountyId, LastName, FirstName, MiddleName, Suffix, DateOfBirth, RegistrationDate, VoterStatus, PartyAffiliation, ResidentialAddress1, ResidentialAddress2, ResidentialCity, 
+                                //    ResidentialState, ResidentialZip, ResidentialZipPlus4, ResidentialCountry, ResidentialPostalCode, MailingAddress1, MailingAddress2, MailingCity, MailingState, MailingZip, MailingZipPlus4, MailingCountry, 
+                                //    MailingPostalCode, CareerCenter, City, CitySchoolDistrict, CountyCourtDistrict, CongressionalDistrict, CourtofAppeals, EducationServiceCenter, ExemptedVillageSchoolDistrict, LibraryDistrict, LocalSchoolDistrict,
+                                //    MunicipalCourtDistrict, Precinct, PrecinctCode, StateBoardofEducation, StateRepresentativeDistrict, StateSenateDistrict, Township, Village, Ward));
+
+                                Voters voter = new Voters(SOSVoterId, CountyNumber, CountyId, LastName, FirstName, MiddleName, Suffix, DateOfBirth, RegistrationDate, VoterStatus, PartyAffiliation, ResidentialAddress1, ResidentialAddress2, ResidentialCity,
+                                       ResidentialState, ResidentialZip, ResidentialZipPlus4, ResidentialCountry, ResidentialPostalCode, MailingAddress1, MailingAddress2, MailingCity, MailingState, MailingZip, MailingZipPlus4, MailingCountry,
+                                       MailingPostalCode, CareerCenter, City, CitySchoolDistrict, CountyCourtDistrict, CongressionalDistrict, CourtofAppeals, EducationServiceCenter, ExemptedVillageSchoolDistrict, LibraryDistrict, LocalSchoolDistrict,
+                                       MunicipalCourtDistrict, Precinct, PrecinctCode, StateBoardofEducation, StateRepresentativeDistrict, StateSenateDistrict, Township, Village, Ward);
+
+
+                                SQLGBSCustomProcess VoterInsert = new SQLGBSCustomProcess();
+                                VoterInsert.InsertVoter(voter, SQLConnect);
+                                
+                                
+                            }
+
+                            //log.write_log(logDirectory, "Create note for encounter: " + enc_nbr.ToString() + "...." + DateTime.Now.ToString("hh:mm:ss"));
                             column = 1;
                             row++;                            
                         }
