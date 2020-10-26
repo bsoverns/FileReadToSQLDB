@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.txtFile = new System.Windows.Forms.TextBox();
             this.btnBrowse = new System.Windows.Forms.Button();
-            this.grpImport = new System.Windows.Forms.GroupBox();
+            this.grpFileImport = new System.Windows.Forms.GroupBox();
             this.btnProcess = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.grpDatabaseLogin = new System.Windows.Forms.GroupBox();
@@ -51,16 +51,24 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.lblTestLabel = new System.Windows.Forms.Label();
-            this.grpImport.SuspendLayout();
+            this.grpFolderImport = new System.Windows.Forms.GroupBox();
+            this.btnProcessFolder = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
+            this.btnFolder = new System.Windows.Forms.Button();
+            this.txtFolder = new System.Windows.Forms.TextBox();
+            this.cmbThreadCount = new System.Windows.Forms.ComboBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.grpFileImport.SuspendLayout();
             this.grpDatabaseLogin.SuspendLayout();
             this.grpBoxExportType.SuspendLayout();
+            this.grpFolderImport.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtFile
             // 
-            this.txtFile.Location = new System.Drawing.Point(38, 27);
+            this.txtFile.Location = new System.Drawing.Point(51, 27);
             this.txtFile.Name = "txtFile";
-            this.txtFile.Size = new System.Drawing.Size(532, 20);
+            this.txtFile.Size = new System.Drawing.Size(519, 20);
             this.txtFile.TabIndex = 0;
             // 
             // btnBrowse
@@ -73,25 +81,25 @@
             this.btnBrowse.UseVisualStyleBackColor = true;
             this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
             // 
-            // grpImport
+            // grpFileImport
             // 
-            this.grpImport.Controls.Add(this.btnProcess);
-            this.grpImport.Controls.Add(this.label1);
-            this.grpImport.Controls.Add(this.btnBrowse);
-            this.grpImport.Controls.Add(this.txtFile);
-            this.grpImport.Enabled = false;
-            this.grpImport.Location = new System.Drawing.Point(21, 170);
-            this.grpImport.Name = "grpImport";
-            this.grpImport.Size = new System.Drawing.Size(665, 124);
-            this.grpImport.TabIndex = 2;
-            this.grpImport.TabStop = false;
-            this.grpImport.Text = "Import File";
+            this.grpFileImport.Controls.Add(this.btnProcess);
+            this.grpFileImport.Controls.Add(this.label1);
+            this.grpFileImport.Controls.Add(this.btnBrowse);
+            this.grpFileImport.Controls.Add(this.txtFile);
+            this.grpFileImport.Enabled = false;
+            this.grpFileImport.Location = new System.Drawing.Point(21, 170);
+            this.grpFileImport.Name = "grpFileImport";
+            this.grpFileImport.Size = new System.Drawing.Size(665, 101);
+            this.grpFileImport.TabIndex = 2;
+            this.grpFileImport.TabStop = false;
+            this.grpFileImport.Text = "Import File";
             // 
             // btnProcess
             // 
-            this.btnProcess.Location = new System.Drawing.Point(38, 54);
+            this.btnProcess.Location = new System.Drawing.Point(51, 53);
             this.btnProcess.Name = "btnProcess";
-            this.btnProcess.Size = new System.Drawing.Size(75, 23);
+            this.btnProcess.Size = new System.Drawing.Size(86, 23);
             this.btnProcess.TabIndex = 3;
             this.btnProcess.Text = "Process File";
             this.btnProcess.UseVisualStyleBackColor = true;
@@ -100,7 +108,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 30);
+            this.label1.Location = new System.Drawing.Point(19, 30);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(26, 13);
             this.label1.TabIndex = 2;
@@ -212,6 +220,8 @@
             // 
             // grpBoxExportType
             // 
+            this.grpBoxExportType.Controls.Add(this.cmbThreadCount);
+            this.grpBoxExportType.Controls.Add(this.label9);
             this.grpBoxExportType.Controls.Add(this.cmbQuoted);
             this.grpBoxExportType.Controls.Add(this.cmbDelimiter);
             this.grpBoxExportType.Controls.Add(this.label6);
@@ -219,7 +229,7 @@
             this.grpBoxExportType.Enabled = false;
             this.grpBoxExportType.Location = new System.Drawing.Point(406, 12);
             this.grpBoxExportType.Name = "grpBoxExportType";
-            this.grpBoxExportType.Size = new System.Drawing.Size(280, 89);
+            this.grpBoxExportType.Size = new System.Drawing.Size(280, 97);
             this.grpBoxExportType.TabIndex = 27;
             this.grpBoxExportType.TabStop = false;
             this.grpBoxExportType.Text = "Export Type";
@@ -229,8 +239,8 @@
             this.cmbQuoted.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbQuoted.FormattingEnabled = true;
             this.cmbQuoted.Items.AddRange(new object[] {
-            "Yes",
-            "No"});
+            "True",
+            "False"});
             this.cmbQuoted.Location = new System.Drawing.Point(120, 43);
             this.cmbQuoted.Name = "cmbQuoted";
             this.cmbQuoted.Size = new System.Drawing.Size(146, 21);
@@ -277,25 +287,107 @@
             this.lblTestLabel.TabIndex = 28;
             this.lblTestLabel.Text = "label8";
             // 
+            // grpFolderImport
+            // 
+            this.grpFolderImport.Controls.Add(this.btnProcessFolder);
+            this.grpFolderImport.Controls.Add(this.label8);
+            this.grpFolderImport.Controls.Add(this.btnFolder);
+            this.grpFolderImport.Controls.Add(this.txtFolder);
+            this.grpFolderImport.Enabled = false;
+            this.grpFolderImport.Location = new System.Drawing.Point(21, 277);
+            this.grpFolderImport.Name = "grpFolderImport";
+            this.grpFolderImport.Size = new System.Drawing.Size(665, 97);
+            this.grpFolderImport.TabIndex = 29;
+            this.grpFolderImport.TabStop = false;
+            this.grpFolderImport.Text = "Import Folder";
+            // 
+            // btnProcessFolder
+            // 
+            this.btnProcessFolder.Location = new System.Drawing.Point(51, 53);
+            this.btnProcessFolder.Name = "btnProcessFolder";
+            this.btnProcessFolder.Size = new System.Drawing.Size(86, 23);
+            this.btnProcessFolder.TabIndex = 3;
+            this.btnProcessFolder.Text = "Process Folder";
+            this.btnProcessFolder.UseVisualStyleBackColor = true;
+            this.btnProcessFolder.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(6, 30);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(39, 13);
+            this.label8.TabIndex = 2;
+            this.label8.Text = "Folder:";
+            // 
+            // btnFolder
+            // 
+            this.btnFolder.Location = new System.Drawing.Point(576, 25);
+            this.btnFolder.Name = "btnFolder";
+            this.btnFolder.Size = new System.Drawing.Size(75, 23);
+            this.btnFolder.TabIndex = 1;
+            this.btnFolder.Text = "Browse";
+            this.btnFolder.UseVisualStyleBackColor = true;
+            this.btnFolder.Click += new System.EventHandler(this.btnFolder_Click);
+            // 
+            // txtFolder
+            // 
+            this.txtFolder.Location = new System.Drawing.Point(51, 27);
+            this.txtFolder.Name = "txtFolder";
+            this.txtFolder.Size = new System.Drawing.Size(519, 20);
+            this.txtFolder.TabIndex = 0;
+            // 
+            // cmbThreadCount
+            // 
+            this.cmbThreadCount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbThreadCount.FormattingEnabled = true;
+            this.cmbThreadCount.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10"});
+            this.cmbThreadCount.Location = new System.Drawing.Point(120, 70);
+            this.cmbThreadCount.Name = "cmbThreadCount";
+            this.cmbThreadCount.Size = new System.Drawing.Size(146, 21);
+            this.cmbThreadCount.TabIndex = 9;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(72, 73);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(46, 13);
+            this.label9.TabIndex = 8;
+            this.label9.Text = "Threads";
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(902, 312);
+            this.ClientSize = new System.Drawing.Size(749, 394);
+            this.Controls.Add(this.grpFolderImport);
             this.Controls.Add(this.lblTestLabel);
             this.Controls.Add(this.grpBoxExportType);
             this.Controls.Add(this.grpDatabaseLogin);
-            this.Controls.Add(this.grpImport);
+            this.Controls.Add(this.grpFileImport);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmMain";
             this.Text = "CSV Reader to SQL Writer";
-            this.grpImport.ResumeLayout(false);
-            this.grpImport.PerformLayout();
+            this.grpFileImport.ResumeLayout(false);
+            this.grpFileImport.PerformLayout();
             this.grpDatabaseLogin.ResumeLayout(false);
             this.grpDatabaseLogin.PerformLayout();
             this.grpBoxExportType.ResumeLayout(false);
             this.grpBoxExportType.PerformLayout();
+            this.grpFolderImport.ResumeLayout(false);
+            this.grpFolderImport.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -305,7 +397,7 @@
 
         private System.Windows.Forms.TextBox txtFile;
         private System.Windows.Forms.Button btnBrowse;
-        private System.Windows.Forms.GroupBox grpImport;
+        private System.Windows.Forms.GroupBox grpFileImport;
         private System.Windows.Forms.Button btnProcess;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox grpDatabaseLogin;
@@ -325,6 +417,13 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label lblTestLabel;
+        private System.Windows.Forms.GroupBox grpFolderImport;
+        private System.Windows.Forms.Button btnProcessFolder;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button btnFolder;
+        private System.Windows.Forms.TextBox txtFolder;
+        private System.Windows.Forms.ComboBox cmbThreadCount;
+        private System.Windows.Forms.Label label9;
     }
 }
 

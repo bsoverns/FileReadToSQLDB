@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.IO;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading;
@@ -21,6 +22,8 @@ namespace FileReadToSQLDB
         string InitialCatalog; //used to save the InitialCatalog        
         string ReportRow;
         string ReportField;
+        int threadCountToUse = 0;
+        int fileProcessThreadCount = 0;        
         SQLConnectionClass SQLConnect = new SQLConnectionClass("", "", "", "", false);
 
         public FrmMain()
@@ -32,7 +35,8 @@ namespace FileReadToSQLDB
         private void SetDefaults()
         {
             cmbDelimiter.SelectedItem = "comma (,)";
-            cmbQuoted.SelectedItem = "Yes";
+            cmbQuoted.SelectedItem = "True";
+            cmbThreadCount.SelectedItem = "1";
 
 #if DEBUG
             txtInstance.Text = @"COMPUTER46";
@@ -107,7 +111,8 @@ namespace FileReadToSQLDB
                     sqlConnString.Close();
 
                     btnConnect.Text = "Valid";
-                    grpImport.Enabled = true;
+                    grpFileImport.Enabled = true;
+                    grpFolderImport.Enabled = true;
                     grpBoxExportType.Enabled = true;
                     version_table.Dispose();
 
@@ -128,17 +133,20 @@ namespace FileReadToSQLDB
         {
             cmbDelimiter.Enabled = false;
             cmbQuoted.Enabled = false;
-            btnProcess.Enabled = false;
-            Thread process_file = new Thread(processFile);
+            grpFileImport.Enabled = false;
+            grpFolderImport.Enabled = false;
+            //Thread process_file = new Thread(processFile);
+            Thread process_file = new Thread(() => processFile(txtFile.Text.ToString()));
             process_file.IsBackground = true;
             process_file.Start();
             //processFile(txtFile.Text.ToString());
         }
 
         //private void processFile(string fileToProcess)
-        private void processFile()
+        private void processFile(string fileInformation)
         {
-            string fileToProcess = txtFile.Text.ToString();
+            //string fileToProcess = txtFile.Text.ToString();
+            string fileToProcess = fileInformation;
             System.IO.FileInfo fileData = new System.IO.FileInfo(fileToProcess);
             LogWriter log = new LogWriter();
             //MessageBox.Show(fileData.Name);
@@ -370,11 +378,6 @@ namespace FileReadToSQLDB
 
                             if (row != 1)
                             {
-                                //_voters.Add(new Voters(SOSVoterId, CountyNumber, CountyId, LastName, FirstName, MiddleName, Suffix, DateOfBirth, RegistrationDate, VoterStatus, PartyAffiliation, ResidentialAddress1, ResidentialAddress2, ResidentialCity, 
-                                //    ResidentialState, ResidentialZip, ResidentialZipPlus4, ResidentialCountry, ResidentialPostalCode, MailingAddress1, MailingAddress2, MailingCity, MailingState, MailingZip, MailingZipPlus4, MailingCountry, 
-                                //    MailingPostalCode, CareerCenter, City, CitySchoolDistrict, CountyCourtDistrict, CongressionalDistrict, CourtofAppeals, EducationServiceCenter, ExemptedVillageSchoolDistrict, LibraryDistrict, LocalSchoolDistrict,
-                                //    MunicipalCourtDistrict, Precinct, PrecinctCode, StateBoardofEducation, StateRepresentativeDistrict, StateSenateDistrict, Township, Village, Ward));
-
                                 Voters voter = new Voters(SOSVoterId, CountyNumber, CountyId, LastName, FirstName, MiddleName, Suffix, DateOfBirth, RegistrationDate, VoterStatus, PartyAffiliation, ResidentialAddress1, ResidentialAddress2, ResidentialCity,
                                        ResidentialState, ResidentialZip, ResidentialZipPlus4, ResidentialCountry, ResidentialPostalCode, MailingAddress1, MailingAddress2, MailingCity, MailingState, MailingZip, MailingZipPlus4, MailingCountry,
                                        MailingPostalCode, CareerCenter, City, CitySchoolDistrict, CountyCourtDistrict, CongressionalDistrict, CourtofAppeals, EducationServiceCenter, ExemptedVillageSchoolDistrict, LibraryDistrict, LocalSchoolDistrict,
@@ -402,8 +405,13 @@ namespace FileReadToSQLDB
 
             finally
             {
-                MessageBox.Show("Done");
-                btnProcess.Enabled = false;
+                fileProcessThreadCount = Process.GetCurrentProcess().Threads.Count;
+                if (fileProcessThreadCount < (threadCountToUse))                
+                {
+                    MessageBox.Show("Done");
+                    grpFileImport.Enabled = true;
+                    grpFolderImport.Enabled = true;
+                }
             }            
         }
 
@@ -414,6 +422,90 @@ namespace FileReadToSQLDB
         {
             lblTestLabel.Text = (ReportRow.ToString() + " - " + ReportField.ToString());
             this.lblTestLabel.Refresh();
+        }
+
+        private void btnFolder_Click(object sender, EventArgs e)
+        {
+            //Files
+            var fileContent = string.Empty;
+            var filePath = string.Empty;
+
+            FolderBrowserDialog diag = new FolderBrowserDialog();
+
+            if (diag.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                string folder = diag.SelectedPath;  //selected folder path
+                txtFolder.Text = folder;
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {            
+            threadCountToUse = Process.GetCurrentProcess().Threads.Count + 1 + Convert.ToInt32(cmbThreadCount.SelectedItem.ToString());
+            cmbDelimiter.Enabled = false;
+            cmbQuoted.Enabled = false;
+            grpFileImport.Enabled = false;
+            grpFolderImport.Enabled = false;
+            Thread process_folder = new Thread(processFolder);
+            process_folder.IsBackground = true;
+            process_folder.Start();
+            //processFile(txtFile.Text.ToString());
+        }
+
+        private void processFolder()
+        {           
+            if (!ValidateDirectory())
+            {
+                MessageBox.Show("Doesn't exists");
+            }
+
+            else
+            {
+
+                System.IO.DirectoryInfo noteRoot = new DirectoryInfo(System.IO.Path.Combine(txtFolder.Text));
+                System.IO.FileInfo[] noteFiles = noteRoot.GetFiles("*.txt");
+
+                foreach (var noteFile in noteFiles)
+                {
+                    fileProcessThreadCount = Process.GetCurrentProcess().Threads.Count;
+
+                    if (File.Exists(noteFile.FullName))
+                    {
+                        string rowNumber = "1";
+                        ReportRow = rowNumber;
+                        ReportField = noteFile.Name;
+                        Invoke(new UIUpdate(StartUpdate));
+
+                        while (fileProcessThreadCount >= (threadCountToUse))
+                        {
+                            fileProcessThreadCount = Process.GetCurrentProcess().Threads.Count;
+                            Thread.Sleep(15000);
+                        }
+
+                        Thread process_file = new Thread(() => processFile(noteFile.FullName));
+                        process_file.IsBackground = true;
+                        process_file.Start();
+                    }
+                }
+
+            }
+        }
+
+        private bool ValidateDirectory()
+        {
+            try
+            {
+                if (!Directory.Exists(this.txtFolder.Text))
+                    return false;
+
+                return true;
+            }
+
+            catch (Exception ex)
+            {
+                int num = (int)MessageBox.Show("Validate directory being monitored: " + ex.Message, "NextGen Note File Monitor", MessageBoxButtons.OK);
+                return false;
+            }
         }
     }
 }
