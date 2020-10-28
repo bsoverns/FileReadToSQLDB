@@ -406,12 +406,13 @@ namespace FileReadToSQLDB
             finally
             {
                 fileProcessThreadCount = Process.GetCurrentProcess().Threads.Count;
-                if (fileProcessThreadCount < (threadCountToUse))                
-                {
-                    MessageBox.Show("Done");
-                    grpFileImport.Enabled = true;
-                    grpFolderImport.Enabled = true;
-                }
+                fileData.MoveTo(@"C:\Users\brads\Desktop\Voters\Files\Backup\" + fileData.Name.ToString());
+                //if (fileProcessThreadCount < (threadCountToUse))                
+                //{
+                //    MessageBox.Show("Done");
+                //    grpFileImport.Enabled = true;
+                //    grpFolderImport.Enabled = true;
+                //}
             }            
         }
 
