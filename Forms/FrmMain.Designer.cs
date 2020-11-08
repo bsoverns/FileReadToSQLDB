@@ -46,6 +46,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.grpBoxExportType = new System.Windows.Forms.GroupBox();
+            this.cmbThreadCount = new System.Windows.Forms.ComboBox();
+            this.label9 = new System.Windows.Forms.Label();
             this.cmbQuoted = new System.Windows.Forms.ComboBox();
             this.cmbDelimiter = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -56,8 +58,6 @@
             this.label8 = new System.Windows.Forms.Label();
             this.btnFolder = new System.Windows.Forms.Button();
             this.txtFolder = new System.Windows.Forms.TextBox();
-            this.cmbThreadCount = new System.Windows.Forms.ComboBox();
-            this.label9 = new System.Windows.Forms.Label();
             this.grpFileImport.SuspendLayout();
             this.grpDatabaseLogin.SuspendLayout();
             this.grpBoxExportType.SuspendLayout();
@@ -234,6 +234,35 @@
             this.grpBoxExportType.TabStop = false;
             this.grpBoxExportType.Text = "Export Type";
             // 
+            // cmbThreadCount
+            // 
+            this.cmbThreadCount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbThreadCount.FormattingEnabled = true;
+            this.cmbThreadCount.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10"});
+            this.cmbThreadCount.Location = new System.Drawing.Point(120, 70);
+            this.cmbThreadCount.Name = "cmbThreadCount";
+            this.cmbThreadCount.Size = new System.Drawing.Size(146, 21);
+            this.cmbThreadCount.TabIndex = 9;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(72, 73);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(46, 13);
+            this.label9.TabIndex = 8;
+            this.label9.Text = "Threads";
+            // 
             // cmbQuoted
             // 
             this.cmbQuoted.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -337,35 +366,6 @@
             this.txtFolder.Size = new System.Drawing.Size(519, 20);
             this.txtFolder.TabIndex = 0;
             // 
-            // cmbThreadCount
-            // 
-            this.cmbThreadCount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbThreadCount.FormattingEnabled = true;
-            this.cmbThreadCount.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10"});
-            this.cmbThreadCount.Location = new System.Drawing.Point(120, 70);
-            this.cmbThreadCount.Name = "cmbThreadCount";
-            this.cmbThreadCount.Size = new System.Drawing.Size(146, 21);
-            this.cmbThreadCount.TabIndex = 9;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(72, 73);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(46, 13);
-            this.label9.TabIndex = 8;
-            this.label9.Text = "Threads";
-            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -378,6 +378,7 @@
             this.Controls.Add(this.grpFileImport);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimizeBox = false;
             this.Name = "FrmMain";
             this.Text = "CSV Reader to SQL Writer";
             this.grpFileImport.ResumeLayout(false);
